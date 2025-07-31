@@ -1,176 +1,126 @@
-# FamilyFuture Planner
+# 家族の未来プランナー (Japanese Family Investment App)
 
-家族の未来を一緒に計画するWebアプリケーション。子育てにかかる費用を可視化し、学校選びから投資プランまで、家族みんなで協力して未来を築くためのプラットフォームです。
+A mobile-first web application designed for Japanese families to save and invest for their children's future through custodial minor investment accounts, facilitate family contributions, and capture emotional milestones in a digital memory capsule.
 
-## 🎯 プロジェクト概要
+## 🌟 Features
 
-FamilyFuture Plannerは、子育てにかかる費用の全体像を「学校選び」「貯金＆投資プランニング」「家族コネクション」という３つの軸で可視化・計画化するWebアプリです。
+### 📊 Investment Dashboard
+- **Portfolio Tracking**: Real-time investment performance with Japanese ETF portfolios
+- **Tax-Efficient Investing**: Custodial minor investment accounts (未成年口座) support
+- **Goal Visualization**: Track progress toward children's education and future funding
 
-### 主要な特徴
-- 📊 **投資プランニング**: 目標金額シミュレーション、投資プラン提案
-- 🏫 **スクールコストエクスプローラー**: 学校別費用比較、パターンシミュレーション
-- 👨‍👩‍👧‍👦 **ファミリーコネクション**: イベント型クラウドファンディング、送金リンク生成
+### 👨‍👩‍👧‍👦 Family Contribution System
+- **Gift Tax Management**: Automatic tracking of Japan's ¥1.1M annual gift tax exemption
+- **Family Invitations**: Invite up to 5 family members (grandparents, relatives, friends)
+- **Collaborative Saving**: One-time and recurring contributions with personalized messages
+- **Cultural Thank-You System**: Automated Japanese thank-you message templates
 
-## 🚀 現在実装済み機能
+### 📸 Memory Capsule
+- **Timeline View**: Organize memories by year with milestone categorization
+- **Milestone Tracking**: Pre-defined Japanese milestones (はじめての笑顔, 入学, etc.)
+- **Media Support**: Photo and video uploads (up to 50MB)
+- **Privacy Controls**: Family-only sharing with visibility toggles
+- **Tagging System**: Organize memories with custom tags
 
-### ✅ 基本機能
-- [x] レスポンシブなダッシュボードUI
-- [x] ユーザー認証（ログイン・登録フォーム）
-- [x] ChatGPT風のクリーンなデザインシステム
-- [x] 高齢者対応のアクセシビリティ機能
+### 🎌 Japanese-First Design
+- **Mobile-First UI**: Optimized for Japanese smartphone usage patterns
+- **Cultural Considerations**: Family-oriented messaging and relationship hierarchies
+- **Localized Content**: Full Japanese interface with cultural nuances
+- **Regulatory Compliance**: Built for Japanese financial regulations (FIEA, PIPA)
 
-### ✅ ファミリーコネクション
-- [x] プロジェクト一覧・作成機能
-- [x] 進捗管理とプログレスバー
-- [x] 送金リンク生成（PayPay/LINE Pay）
-- [x] 統計情報ダッシュボード
-- [x] 参加者管理
-
-### 🔄 開発中
-- [ ] 投資プランニング機能
-- [ ] 学校費用データベース
-- [ ] Firebase認証実装
-- [ ] 詳細なメッセージ機能
-
-## 🛠️ 技術スタック
-
-### Frontend
-- **Next.js 15** - React フレームワーク（App Router使用）
-- **TypeScript** - 型安全な開発
-- **Tailwind CSS v3** - ユーティリティファーストCSS
-- **React Hook Form** - フォーム管理
-- **Framer Motion** - アニメーション
-
-### Backend & Database
-- **Firebase** - 認証・データベース・ホスティング
-- **Firestore** - NoSQLデータベース
-- **Firebase Auth** - ユーザー認証
-
-### 開発ツール
-- **ESLint** - コード品質管理
-- **Cursor AI** - AI支援開発
-
-## 📦 セットアップ
-
-### 前提条件
-- Node.js 18.x以上
-- npm または yarn
-
-### インストール手順
-
-1. **リポジトリのクローン**
-   ```bash
-   git clone https://github.com/keikaji403/ffp.git
-   cd ffp
-   ```
-
-2. **依存関係のインストール**
-   ```bash
-   npm install
-   ```
-
-3. **開発サーバーの起動**
-   ```bash
-   npm run dev
-   ```
-
-4. **ブラウザでアクセス**
-   ```
-   http://localhost:3000
-   ```
-
-### 利用可能なスクリプト
+## 🚀 Quick Start
 
 ```bash
-npm run dev      # 開発サーバー起動
-npm run build    # プロダクションビルド
-npm run start    # プロダクションサーバー起動
-npm run lint     # ESLintチェック
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
 ```
 
-## 🎨 デザインシステム
+Open [http://localhost:3000](http://localhost:3000) to view the app.
 
-### カラーパレット
-- **Primary**: グリーン系 (#16a34a) - 投資・成長をイメージ
-- **Secondary**: ブルー系 (#3b82f6) - 信頼性をイメージ
-- **Accent**: パープル系 (#7c3aed) - 家族の絆をイメージ
+## 🏗️ Tech Stack
 
-### アクセシビリティ
-- タッチターゲットサイズ44px以上（高齢者対応）
-- コントラスト比の最適化
-- キーボードナビゲーション対応
-- レスポンシブデザイン
+- **Frontend**: Next.js 15, React 19, TypeScript
+- **Styling**: Tailwind CSS with Japanese-friendly responsive design
+- **Charts**: Recharts for investment visualization
+- **UI Components**: Custom components with Lucide React icons
+- **State Management**: React hooks with local state
+- **Forms**: React Hook Form with Zod validation
 
-## 📱 機能詳細
+## 📱 MVP Features Implemented
 
-### ダッシュボード
-- メイン統計表示（目標金額、進捗、学校数など）
-- 最近の活動フィード
-- 3つの主要機能へのナビゲーション
+✅ **Investment Dashboard**
+- Portfolio performance charts
+- Key metrics cards (balance, gains, gift tax status)
+- Recent transactions and memories feed
 
-### ファミリーコネクション
-- **プロジェクト作成**: 目標金額・期限・説明を設定
-- **進捗管理**: リアルタイムプログレスバー
-- **送金リンク**: PayPay/LINE Pay対応
-- **参加者管理**: 家族メンバーの招待・管理
+✅ **Family Contribution System**
+- Contributor management with Japanese relationship types
+- Gift tax limit tracking and warnings
+- Contribution forms with recurring payment options
 
-## 🗂️ プロジェクト構造
+✅ **Memory Capsule**
+- Photo/video upload with preview
+- Timeline organization by year
+- Milestone categorization
+- Tag management system
 
-```
-src/
-├── app/                    # Next.js App Router
-│   ├── (auth)/            # 認証関連ページ
-│   │   ├── login/         # ログインページ
-│   │   └── register/      # 新規登録ページ
-│   ├── family-connection/ # ファミリーコネクション
-│   ├── globals.css        # グローバルCSS
-│   ├── layout.tsx         # ルートレイアウト
-│   └── page.tsx          # メインダッシュボード
-├── components/            # 再利用可能コンポーネント
-│   ├── auth/             # 認証関連コンポーネント
-│   └── ui/               # UI基本コンポーネント
-└── lib/                  # ユーティリティ・設定
-    ├── firebase.ts       # Firebase設定
-    └── utils.ts         # ユーティリティ関数
-```
+✅ **Japanese UI/UX**
+- Mobile-first responsive navigation
+- Japanese text throughout
+- Cultural design patterns
+- Family-oriented user experience
 
-## 🎯 ロードマップ
+## 🎯 Target User Persona: Aiko Tanaka
 
-### Phase 1: 基盤構築 ✅
-- [x] プロジェクト初期設定
-- [x] デザインシステム構築
-- [x] 基本ページ実装
+- **Age**: 34-year-old mother in Tokyo
+- **Income**: ¥8M household income
+- **Goal**: Build ¥5-10M fund for daughter's university/wedding/home
+- **Pain Points**: Busy with work/childcare, intimidated by investment complexity
+- **Preferences**: Mobile-first, Japanese interface, family collaboration
 
-### Phase 2: ファミリーコネクション ✅
-- [x] プロジェクト管理機能
-- [x] 送金リンク生成
-- [x] 進捗表示
+## 💰 Investment Portfolio Options
 
-### Phase 3: 投資プランニング（開発予定）
-- [ ] シミュレーション機能
-- [ ] 投資プラン提案
-- [ ] グラフ表示
+### 安定成長型 (Conservative Growth)
+- TOPIX ETF (40%), S&P 500 ETF (30%), TOPIX ex-Financials (20%), MSCI KOKUSAI (10%)
+- Expected Return: 4.5%
+- Risk Level: Low
 
-### Phase 4: スクールコスト（開発予定）
-- [ ] 学校データベース
-- [ ] 費用比較機能
-- [ ] 検索・フィルタリング
+### バランス成長型 (Balanced Growth)
+- TOPIX ETF (25%), S&P 500 ETF (35%), MSCI KOKUSAI (25%), Emerging Markets (15%)
+- Expected Return: 6.2%
+- Risk Level: Medium
 
-## 👥 コントリビューション
+### 成長重視型 (Growth Focused)
+- S&P 500 ETF (40%), MSCI KOKUSAI (30%), Emerging Markets (20%), TOPIX ETF (10%)
+- Expected Return: 8.1%
+- Risk Level: High
 
-1. フォークしてブランチを作成
-2. 機能を実装
-3. テストを追加
-4. プルリクエストを作成
+## 🏛️ Regulatory Considerations
 
-## 📄 ライセンス
+- **FIEA Compliance**: Partners with licensed brokers (Rakuten/SBI Securities)
+- **Gift Tax Tracking**: Automatic monitoring of ¥1.1M annual exemption
+- **PIPA Compliance**: Privacy-first data handling
+- **Tax Disclaimers**: Built-in warnings and advisor recommendations
 
-MIT License
+## 🔜 Future Enhancements
 
-## 📞 サポート
+- Backend API integration (FastAPI + SQLite)
+- 2FA authentication via SMS
+- Real broker API connections
+- Advanced portfolio customization
+- Premium features and subscription model
+- Social sharing capabilities
 
-質問やバグ報告は [Issues](https://github.com/keikaji403/ffp/issues) にてお願いします。
+## 📄 License
+
+Private project - All rights reserved.
 
 ---
 
-**FamilyFuture Planner** - 家族の未来を一緒に計画しよう 🌟
+*Built with ❤️ for Japanese families planning their children's bright future*
