@@ -1,161 +1,353 @@
-export default function Dashboard() {
+'use client';
+
+import React, { useState } from 'react';
+import { Toaster } from 'react-hot-toast';
+import Navigation from '@/components/layout/Navigation';
+import Dashboard from '@/components/dashboard/Dashboard';
+import FamilyContribution from '@/components/family/FamilyContribution';
+import MemoryCapsule from '@/components/memory/MemoryCapsule';
+import { 
+  DashboardData, 
+  Contributor, 
+  Memory, 
+  ContributionFormData, 
+  MemoryFormData 
+} from '@/lib/types';
+
+// Mock data for demonstration
+const mockDashboardData: DashboardData = {
+  totalBalance: 678450,
+  totalGains: 28450,
+  gainPercentage: 4.37,
+  monthlyGrowth: 5200,
+  recentMemories: [
+    {
+      id: '1',
+      childId: '1',
+      title: 'はじめての笑顔',
+      description: '今日、えみちゃんがはじめてにっこり笑ってくれました！',
+      mediaUrl: '/api/placeholder/400/300',
+      mediaType: 'photo',
+      milestone: 'firstSmile',
+      uploadedBy: '田中愛子',
+      uploadedAt: new Date('2024-01-15'),
+      tags: ['笑顔', '成長', '嬉しい'],
+      isVisible: true
+    },
+    {
+      id: '2',
+      childId: '1',
+      title: '公園デビュー',
+      description: '近所の公園で遊びました。ブランコが大好きです。',
+      mediaUrl: '/api/placeholder/400/300',
+      mediaType: 'photo',
+      milestone: 'other',
+      uploadedBy: '田中愛子',
+      uploadedAt: new Date('2024-01-10'),
+      tags: ['公園', '外遊び', 'ブランコ'],
+      isVisible: true
+    }
+  ],
+  recentTransactions: [
+    {
+      id: '1',
+      accountId: '1',
+      type: 'deposit',
+      amount: 10000,
+      description: '月次自動拠出',
+      executedAt: new Date('2024-01-01'),
+      createdAt: new Date('2024-01-01')
+    },
+    {
+      id: '2',
+      accountId: '1',
+      type: 'buy',
+      amount: 9500,
+      symbol: '1306',
+      shares: 4,
+      price: 2375,
+      description: 'TOPIX ETF 購入',
+      executedAt: new Date('2024-01-02'),
+      createdAt: new Date('2024-01-02')
+    },
+    {
+      id: '3',
+      accountId: '1',
+      type: 'deposit',
+      amount: 5000,
+      contributorId: '2',
+      description: 'おじいちゃんからの拠出',
+      executedAt: new Date('2023-12-25'),
+      createdAt: new Date('2023-12-25')
+    }
+  ],
+  giftTaxStatus: {
+    used: 85000,
+    remaining: 1015000,
+    year: 2024
+  },
+  portfolioPerformance: {
+    labels: ['1月', '2月', '3月', '4月', '5月', '6月'],
+    values: [50000, 52000, 48000, 55000, 58000, 62000]
+  }
+};
+
+const mockContributors: Contributor[] = [
+  {
+    id: '1',
+    childId: '1',
+    name: '田中太郎',
+    email: 'taro@tanaka.com',
+    relationship: 'grandfather',
+    totalContributed: 50000,
+    isActive: true,
+    invitedAt: new Date('2023-12-01'),
+    lastContributionAt: new Date('2023-12-25')
+  },
+  {
+    id: '2',
+    childId: '1',
+    name: '田中花子',
+    email: 'hanako@tanaka.com',
+    relationship: 'grandmother',
+    totalContributed: 25000,
+    isActive: true,
+    invitedAt: new Date('2023-12-01'),
+    lastContributionAt: new Date('2023-12-20')
+  },
+  {
+    id: '3',
+    childId: '1',
+    name: '田中次郎',
+    email: 'jiro@tanaka.com',
+    relationship: 'uncle',
+    totalContributed: 10000,
+    isActive: false,
+    invitedAt: new Date('2024-01-05')
+  }
+];
+
+const mockMemories: Memory[] = [
+  {
+    id: '1',
+    childId: '1',
+    title: 'はじめての笑顔',
+    description: '今日、えみちゃんがはじめてにっこり笑ってくれました！とても嬉しい瞬間でした。',
+    mediaUrl: '/api/placeholder/400/300',
+    mediaType: 'photo',
+    milestone: 'firstSmile',
+    uploadedBy: '田中愛子',
+    uploadedAt: new Date('2024-01-15'),
+    tags: ['笑顔', '成長', '嬉しい'],
+    isVisible: true
+  },
+  {
+    id: '2',
+    childId: '1',
+    title: '公園デビュー',
+    description: '近所の公園で遊びました。ブランコが大好きです。お天気も良くて最高の日でした。',
+    mediaUrl: '/api/placeholder/400/300',
+    mediaType: 'photo',
+    milestone: 'other',
+    uploadedBy: '田中愛子',
+    uploadedAt: new Date('2024-01-10'),
+    tags: ['公園', '外遊び', 'ブランコ'],
+    isVisible: true
+  },
+  {
+    id: '3',
+    childId: '1',
+    title: 'お食い初め',
+    description: '生後100日のお食い初めをしました。家族みんなでお祝いできて良かったです。',
+    mediaUrl: '/api/placeholder/400/300',
+    mediaType: 'photo',
+    milestone: 'other',
+    uploadedBy: '田中愛子',
+    uploadedAt: new Date('2023-12-15'),
+    tags: ['お食い初め', '家族', 'お祝い'],
+    isVisible: true
+  }
+];
+
+export default function Home() {
+  const [currentPage, setCurrentPage] = useState('dashboard');
+  const [dashboardData, setDashboardData] = useState<DashboardData>(mockDashboardData);
+  const [contributors, setContributors] = useState<Contributor[]>(mockContributors);
+  const [memories, setMemories] = useState<Memory[]>(mockMemories);
+
+  const childName = 'えみ';
+
+  const handleNavigate = (page: string) => {
+    setCurrentPage(page);
+  };
+
+  const handleAddMemory = (data: MemoryFormData) => {
+    const newMemory: Memory = {
+      id: Date.now().toString(),
+      childId: '1',
+      title: data.title,
+      description: data.description,
+      mediaUrl: data.media ? URL.createObjectURL(data.media) : undefined,
+      mediaType: data.media?.type.startsWith('image/') ? 'photo' : 'video',
+      milestone: data.milestone,
+      uploadedBy: '田中愛子',
+      uploadedAt: new Date(),
+      tags: data.tags,
+      isVisible: true
+    };
+
+    setMemories(prev => [newMemory, ...prev]);
+    
+    // Update dashboard with new memory
+    setDashboardData(prev => ({
+      ...prev,
+      recentMemories: [newMemory, ...prev.recentMemories].slice(0, 3)
+    }));
+  };
+
+  const handleToggleMemoryVisibility = (memoryId: string) => {
+    setMemories(prev => 
+      prev.map(memory => 
+        memory.id === memoryId 
+          ? { ...memory, isVisible: !memory.isVisible }
+          : memory
+      )
+    );
+  };
+
+  const handleInviteContributor = (email: string, name: string, relationship: string) => {
+    const newContributor: Contributor = {
+      id: Date.now().toString(),
+      childId: '1',
+      name,
+      email,
+      relationship,
+      totalContributed: 0,
+      isActive: false,
+      invitedAt: new Date()
+    };
+
+    setContributors(prev => [...prev, newContributor]);
+  };
+
+  const handleMakeContribution = (contributorId: string, data: ContributionFormData) => {
+    // Update contributor
+    setContributors(prev => 
+      prev.map(contributor => 
+        contributor.id === contributorId
+          ? {
+              ...contributor,
+              totalContributed: contributor.totalContributed + data.amount,
+              lastContributionAt: new Date(),
+              isActive: true
+            }
+          : contributor
+      )
+    );
+
+    // Update dashboard data
+    setDashboardData(prev => ({
+      ...prev,
+      totalBalance: prev.totalBalance + data.amount,
+      giftTaxStatus: {
+        ...prev.giftTaxStatus,
+        used: prev.giftTaxStatus.used + data.amount,
+        remaining: prev.giftTaxStatus.remaining - data.amount
+      },
+      recentTransactions: [
+        {
+          id: Date.now().toString(),
+          accountId: '1',
+          type: 'deposit',
+          amount: data.amount,
+          contributorId: contributorId,
+          description: `${contributors.find(c => c.id === contributorId)?.name}からの拠出`,
+          executedAt: new Date(),
+          createdAt: new Date()
+        },
+        ...prev.recentTransactions
+      ].slice(0, 5)
+    }));
+  };
+
+  const renderCurrentPage = () => {
+    switch (currentPage) {
+      case 'dashboard':
+        return (
+          <Dashboard
+            data={dashboardData}
+            childName={childName}
+            onAddMemory={() => setCurrentPage('memories')}
+            onInviteFamily={() => setCurrentPage('family')}
+            onMakeContribution={() => setCurrentPage('family')}
+          />
+        );
+      case 'family':
+        return (
+          <FamilyContribution
+            childName={childName}
+            contributors={contributors}
+            giftTaxUsed={dashboardData.giftTaxStatus.used}
+            taxYear={dashboardData.giftTaxStatus.year}
+            onInviteContributor={handleInviteContributor}
+            onMakeContribution={handleMakeContribution}
+          />
+        );
+      case 'memories':
+        return (
+          <MemoryCapsule
+            childName={childName}
+            memories={memories}
+            onAddMemory={handleAddMemory}
+            onToggleVisibility={handleToggleMemoryVisibility}
+          />
+        );
+      case 'investments':
+        return (
+          <div className="min-h-screen bg-gray-50 p-4 pt-20 pb-20 md:pt-20 md:pb-4">
+            <div className="text-center py-16">
+              <h1 className="text-2xl font-bold text-gray-900 mb-4">投資管理</h1>
+              <p className="text-gray-600">投資ポートフォリオと取引履歴の詳細ページ（開発中）</p>
+            </div>
+          </div>
+        );
+      case 'settings':
+        return (
+          <div className="min-h-screen bg-gray-50 p-4 pt-20 pb-20 md:pt-20 md:pb-4">
+            <div className="text-center py-16">
+              <h1 className="text-2xl font-bold text-gray-900 mb-4">設定</h1>
+              <p className="text-gray-600">アプリの設定とアカウント管理（開発中）</p>
+            </div>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-gray-900">
-                FamilyFuture Planner
-              </h1>
-            </div>
-            <nav className="flex space-x-4">
-              <a href="/login" className="px-4 py-2 text-gray-600 hover:text-gray-900">
-                ログイン
-              </a>
-              <a href="/register" className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-                新規登録
-              </a>
-            </nav>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Welcome Section */}
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">
-            家族の未来を一緒に計画しよう
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl">
-            子育てにかかる費用を可視化し、学校選びから投資プランまで、家族みんなで協力して未来を築いていきましょう。
-          </p>
-        </div>
-
-        {/* Main Dashboard Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {/* 投資プランニング */}
-          <div className="bg-white rounded-lg border shadow-sm hover:shadow-lg transition-shadow cursor-pointer">
-            <div className="p-6">
-              <h3 className="text-xl font-semibold text-green-600 flex items-center mb-4">
-                <span className="text-2xl mr-2">💰</span>
-                投資プランニング
-              </h3>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">目標金額</span>
-                  <span className="text-lg font-semibold text-gray-900">2,500万円</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">現在の進捗</span>
-                  <span className="text-lg font-semibold text-green-600">12.5%</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div className="bg-green-600 h-2 rounded-full transition-all duration-300" style={{ width: '12.5%' }}></div>
-                </div>
-                <button className="w-full mt-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-                  プランを見る
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* スクールコスト */}
-          <div className="bg-white rounded-lg border shadow-sm hover:shadow-lg transition-shadow cursor-pointer">
-            <div className="p-6">
-              <h3 className="text-xl font-semibold text-blue-600 flex items-center mb-4">
-                <span className="text-2xl mr-2">🏫</span>
-                スクールコスト
-              </h3>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">登録校数</span>
-                  <span className="text-lg font-semibold text-gray-900">1,234校</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">比較可能</span>
-                  <span className="text-lg font-semibold text-blue-600">利用可能</span>
-                </div>
-                <div className="text-xs text-gray-500">
-                  東京23区の幼稚園〜大学の学費データを網羅
-                </div>
-                <button className="w-full mt-4 px-4 py-2 bg-gray-100 text-gray-900 rounded-lg hover:bg-gray-200">
-                  学校を探す
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* ファミリーコネクション */}
-          <a href="/family-connection" className="bg-white rounded-lg border shadow-sm hover:shadow-lg transition-shadow cursor-pointer block">
-            <div className="p-6">
-              <h3 className="text-xl font-semibold text-purple-600 flex items-center mb-4">
-                <span className="text-2xl mr-2">👨‍👩‍👧‍👦</span>
-                ファミリーコネクション
-              </h3>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">進行中プロジェクト</span>
-                  <span className="text-lg font-semibold text-gray-900">3件</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">家族メンバー</span>
-                  <span className="text-lg font-semibold text-purple-600">8人</span>
-                </div>
-                <div className="text-xs text-gray-500">
-                  小学校入学資金、塾費用、制服代など
-                </div>
-                <button className="w-full mt-4 px-4 py-2 border border-gray-300 bg-white text-gray-700 rounded-lg hover:bg-gray-50">
-                  プロジェクト管理
-                </button>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        {/* 最近の活動 */}
-        <div className="bg-white rounded-lg border shadow-sm">
-          <div className="p-6">
-            <h3 className="text-xl font-semibold mb-4">最近の活動</h3>
-            <div className="space-y-4">
-              <div className="flex items-center space-x-3 p-3 rounded-lg bg-green-50">
-                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                  <span className="text-green-600 text-sm">💰</span>
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900">投資プランが更新されました</p>
-                  <p className="text-xs text-gray-500">月額積立額を15万円に調整</p>
-                </div>
-                <span className="text-xs text-gray-400">2分前</span>
-              </div>
-              
-              <div className="flex items-center space-x-3 p-3 rounded-lg bg-blue-50">
-                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                  <span className="text-blue-600 text-sm">🏫</span>
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900">新しい学校が追加されました</p>
-                  <p className="text-xs text-gray-500">〇〇小学校の学費データを更新</p>
-                </div>
-                <span className="text-xs text-gray-400">1時間前</span>
-              </div>
-              
-              <div className="flex items-center space-x-3 p-3 rounded-lg bg-purple-50">
-                <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
-                  <span className="text-purple-600 text-sm">👨‍👩‍👧‍👦</span>
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900">おじいちゃんから送金がありました</p>
-                  <p className="text-xs text-gray-500">小学校入学資金プロジェクト +50,000円</p>
-                </div>
-                <span className="text-xs text-gray-400">3時間前</span>
-              </div>
-            </div>
-          </div>
-        </div>
+      <Navigation 
+        currentPage={currentPage} 
+        onNavigate={handleNavigate}
+        childName={childName}
+      />
+      
+      <main className="pt-16 pb-16 md:pt-16 md:pb-0">
+        {renderCurrentPage()}
       </main>
+
+      <Toaster 
+        position="top-center"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: '#363636',
+            color: '#fff',
+            fontSize: '14px',
+          },
+        }}
+      />
     </div>
   );
 } 
